@@ -1,0 +1,58 @@
+{
+  "name": "@telazer/number-formatter",
+  "version": "1.0.0",
+  "description": "A library for handling number formatting",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Telazer/number-formatter"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "watch": "nodemon --watch ./src -e ts -x \"npm run build\"",
+    "prepare": "npm run build",
+    "clean": "rm -rf dist",
+    "lint": "eslint --fix ./src && prettier --write .",
+    "lint:check": "eslint ./src",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "check": "npm run lint:check && npm test",
+    "pre-commit": "npm run lint && npm test"
+  },
+  "keywords": [
+    "number",
+    "big-number",
+    "bigint",
+    "format",
+    "formatter"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "author": "Baris Tuna <baris@telazer.com, baristna@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "eslint": "^9.33.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "jest": "^30.0.5",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
