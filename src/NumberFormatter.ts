@@ -1,15 +1,21 @@
-import { DEFAULT_OPTIONS } from './consts';
+import { BIG_NUMBER_SUFFIX, DEFAULT_OPTIONS } from './consts';
 import { NumberFormatData, NumberFormatOptions, Numeric, Rounding } from './types';
 import { digitsForOutput, roundDecimalString, splitNumberString, stripLeadingZeros } from './utils';
 
 export class NumberFormatter {
+  static suffixes = BIG_NUMBER_SUFFIX;
+
+  static setSuffixes(suffixes: string[]) {
+    this.suffixes = suffixes;
+  }
+
   static bigNumber<T extends Numeric>(input: T, options?: NumberFormatOptions<T>): string {
     const data = this.bigNumberData(input, options);
     return `${data.value}${data.decimals ? '.' + data.decimals : ''}${data.suffix}`;
   }
 
   static bigNumberData<T extends Numeric>(input: T, options?: NumberFormatOptions<T>): NumberFormatData<T> {
-    const o = { ...DEFAULT_OPTIONS, ...options } as NumberFormatOptions<T>;
+    const o = { ...DEFAULT_OPTIONS, suffixes: this.suffixes, ...options } as NumberFormatOptions<T>;
     const minD = Math.max(0, o.minDecimals ?? 0);
     const maxD = Math.max(minD, o.maxDecimals ?? 2);
     const forceD = o.forceDecimals === undefined ? undefined : Math.max(0, o.forceDecimals);
@@ -31,7 +37,7 @@ export class NumberFormatter {
     let group = Math.floor((digits.length - 1) / 3);
     if (group < 0) group = 0;
 
-    const suffixes = (o.suffixes ?? DEFAULT_OPTIONS.suffixes) as string[];
+    const suffixes = o.suffixes as string[];
     if (group >= suffixes.length) group = suffixes.length - 1;
 
     const intLenAfterScale = Math.max(1, digits.length - group * 3);
