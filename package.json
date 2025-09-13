@@ -1,6 +1,6 @@
 {
   "name": "@telazer/number-formatter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A library for handling number formatting",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
